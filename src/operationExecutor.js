@@ -33,10 +33,15 @@ class OperationExecutor {
    * @returns object that contains source object and his modified clone
    */
   firstTaskExecute(arg) {
-    /**
-     * Place your code here
-     */
-    return null /* variable with result */;
+
+
+      var object = arg.obj1;
+      var copy = JSON.parse(JSON.stringify(object));
+
+
+      copy.relatives[0].firstName = "ffff";
+      return {object, copy} ;
+
   }
 
   /**
@@ -46,10 +51,13 @@ class OperationExecutor {
    * @returns object that contains source objects and their combined and modified clone
    */
   secondTaskExecute(arg) {
-    /**
-     * Place your code here
-     */
-    return null /* variable with result */;
+
+    var result = { ...arg.obj1, ...arg.obj2};
+    result.a="1111";
+      result.b="2222";
+      console.log(arg);
+
+    return result;
   }
 
   /**
@@ -59,10 +67,14 @@ class OperationExecutor {
    * @returns object that contains modified source object
    */
   thirdTaskExecute(arg) {
-    /**
-     * Place your code here
-     */
-    return null /* variable with result */;
+      arg.obj1.relatives.forEach(x => {
+        if( x.lastname != "Ivanova"){
+            x.gender = "female";
+        } else {
+            x.gender = "male";
+        }
+      });
+    return arg ;
   }
 
   /**
@@ -72,10 +84,15 @@ class OperationExecutor {
    * @returns object that contains array of string with female relatives
    */
   fourthTaskExecute(arg) {
-    /**
-     * Place your code here
-     */
-    return null /* variable with result */;
+      var greeting="";
+  arg.obj1.relatives.forEach((relative) => {
+    if (relative.gender =="female") {
+
+      greeting+=(`Hello,${relative.firstName} ${relative.lastName}`);
+       greeting+=("!");
+    }
+  })
+    return greeting;
   }
 
   /**
@@ -85,10 +102,9 @@ class OperationExecutor {
    * @returns string which contains the class of the button and current color
    */
   fifthTaskExecute(arg) {
-    /**
-     * Place your code here
-     */
-    return '';
+    document.getElementsByClassName(arg.className)[0].style.background = arg.color;
+    return  `${arg.className} ${document.getElementsByClassName(arg.className)[0].style.background}`;
+
   }
 
   /**
@@ -101,7 +117,7 @@ class OperationExecutor {
     /**
      * Place your code here
      */
-    return null;
+    return   arg.hostNames.filter((x) => x === location.hostname);
   }
 
   /**
@@ -111,10 +127,12 @@ class OperationExecutor {
    * @returns obj that contains swap pairs ('value: key')
    */
   seventhTaskExecute(arg) {
-    /**
-     * Place your code here
-     */
-    return null;
+    var reverse = {};
+    for(var i in arg){
+      reverse[arg[i]]= i;
+    }
+    console.log(arg);
+    return reverse;
   }
 
   /**
@@ -124,10 +142,16 @@ class OperationExecutor {
    * @returns obj that built using array's values
    */
   eighthTaskExecute(arg) {
-    /**
-     * Place your code here
-     */
-    return null;
+    //var arr = {...arg.arr1, ...arg.arr2};
+      var arr = arg.arr1.concat(arg.arr2);
+      var obj = {};
+      for (var i = 0; i<arr.length; i+=2) {
+        obj[arr[i]]= (arr[i+1] == undefined) ? null: arr[i+1];
+
+      }
+
+
+      return obj;
   }
 
   /**
@@ -137,10 +161,12 @@ class OperationExecutor {
    * @returns obj that contains pairs id: obj with this id
    */
   ninthTaskExecute(arg) {
-    /**
-     * Place your code here
-     */
-    return null;
+      var result = {};
+      for (var i = 0; i < arg.users.length; i++) {
+          result[arg.users[i].id] = arg.users[i];
+      }
+
+    return result;
   }
 
   /**
@@ -150,11 +176,16 @@ class OperationExecutor {
    * @returns obj that contains the array with info about children of the node
    */
   tenthTaskExecute(arg) {
-    /**
-     * Place your code here
-     */
-    return null;
+      var children = document.getElementsByClassName(arg.className)[0].childNodes;
+
+      for (let i = 0; i < children.length; i++) {
+          if (children[i].tagName != undefined) {
+              arg.childrenInfo.push (`${children[i].tagName}: ${children[i].className}`);
+          }
+      }
+    return arg;
   }
+
 }
 
 export default OperationExecutor;
